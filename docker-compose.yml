@@ -1,0 +1,28 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./mlruns:/app/mlruns
+
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    command: standalone
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/orchestration/dags
+      MLFLOW_TRACKING_URI: sqlite:///data/database/mlflow_airflow.db
+    working_dir: /opt/airflow/project
+    volumes:
+      - ./:/opt/airflow/project

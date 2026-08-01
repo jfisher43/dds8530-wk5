@@ -1,0 +1,16 @@
+.venv/
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+mlruns/
+data/raw/
+data/processed/
+data/database/*.db
+models/*.joblib
+artifacts/
+logs/
+airflow.db
+standalone_admin_password.txt
+.DS_Store
